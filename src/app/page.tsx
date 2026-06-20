@@ -72,16 +72,10 @@ const plans = [
 export default function HomePage() {
   return (
     <main className={styles.page}>
-      <nav className={styles.nav} aria-label="Primary navigation">
         <a href="#home" className={styles.navBrand} aria-label="Vertex home">
         </a>
         <div className={styles.navLinks}>
         </div>
-        <a href="/dashboard" className={styles.navAccount} aria-label="Open dashboard">
-          <span className={styles.navAvatar} />
-          <span className={styles.navChevron} />
-        </a>
-      </nav>
 
       <section className={styles.hero} id="home">
         <div className={`${styles.heroCopy} ${styles.reveal}`}>
