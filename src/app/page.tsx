@@ -57,7 +57,7 @@ const plans = [
     desc: "For large communities and networks.",
     features: ["Everything in Pro", "Multi-server management", "Custom event pipeline", "Dedicated support channel", "Early access to beta features", "SLA uptime guarantee"],
     cta: "Contact us",
-    href: "https://discord.gg/vertex",
+    href: "https://discord.gg/vte",
     highlight: false,
   },
 ];
@@ -239,7 +239,7 @@ export default function HomePage() {
               <div className={styles.footerColTitle}>Resources</div>
               <a href="/docs" className={styles.footerLink}>Documentation</a>
               <a href="/dashboard" className={styles.footerLink}>Dashboard</a>
-              <a href="https://discord.gg/vertex" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Support Server</a>
+              <a href="https://discord.gg/vte" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Support Server</a>
               <a href="/changelog" className={styles.footerLink}>Changelog</a>
             </div>
             <div className={styles.footerCol}>

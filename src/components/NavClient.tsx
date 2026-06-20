@@ -27,7 +27,7 @@ export function NavClient({ session }: { session: Session | null }) {
           <Link href="#features" className={styles.link}>Features</Link>
           <Link href="#pricing" className={styles.link}>Pricing</Link>
           <a href="/docs" className={styles.link}>Docs</a>
-          <a href="https://discord.gg/vertex" className={styles.link} target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://discord.gg/vte" className={styles.link} target="_blank" rel="noopener noreferrer">Support</a>
         </nav>
         <div className={styles.right}>
           {session ? (
