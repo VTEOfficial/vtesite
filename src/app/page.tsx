@@ -1,32 +1,47 @@
-import Image from "next/image";
-import { LoginButton } from "@/components/LoginButton";
 import styles from "./page.module.css";
+
+const inviteUrl = "https://discord.com/oauth2/authorize?client_id=1516645906009690272";
+const supportUrl = "https://discord.gg/vertex";
+
+const navItems = [
+  { label: "Home", href: "#home" },
+  { label: "Add Bot", href: inviteUrl },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Docs", href: "/docs" },
+];
 
 const modules = [
   {
-    tag: "Antinuke",
-    title: "Stop nukes before they complete",
-    body: "Monitors every privileged action in real time. The moment an account crosses your configured threshold — mass deletes, permission wipes, ban floods — Vertex intervenes and reverts within milliseconds.",
-    stats: [{ label: "Avg. response", value: "<80ms" }, { label: "Actions tracked", value: "34" }],
+    name: "Antinuke",
+    title: "Stop destructive actions before they spread.",
+    body: "Track role edits, channel wipes, ban spikes, permission changes, and escalation patterns with clear thresholds built for real server teams.",
+    metric: "34 event types",
   },
   {
-    tag: "Antiraid",
-    title: "Coordinated jozn floods, neutralized",
-    body: "Detects account-age patterns, join velocity, and profile signals simultaneously. Automatically locks the server or quarantines arrivals until the threat signature clears.",
-    stats: [{ label: "Detection signals", value: "12" }, { label: "Auto-actions", value: "6" }],
+    name: "Antiraid",
+    title: "Slow down raids without slowing your staff.",
+    body: "Detect join velocity, account age clusters, suspicious profile patterns, and repeated entry behavior before the raid reaches your members.",
+    metric: "12 signals",
   },
   {
-    tag: "Moderation",
-    title: "A full case system, not just logs",
-    body: "Every action — kick, ban, timeout, warn — gets a case ID, responsible moderator, timestamp, and reason. Query, filter, and audit your entire history from the dashboard.",
-    stats: [{ label: "Case types", value: "9" }, { label: "Log retention", value: "Unlimited" }],
+    name: "Moderation",
+    title: "Keep every action tied to a case.",
+    body: "Warns, kicks, bans, timeouts, reasons, moderators, and audit history stay searchable from one focused control panel.",
+    metric: "9 case types",
   },
   {
-    tag: "Analytics",
-    title: "Understand what's happening",
-    body: "Server growth, moderation volume, raid attempts, message activity — surfaced as clear charts on your dashboard. Know your server's health at a glance.",
-    stats: [{ label: "Metrics tracked", value: "20+" }, { label: "History", value: "90 days" }],
+    name: "Analytics",
+    title: "See what is happening at a glance.",
+    body: "Surface moderation volume, growth changes, raid attempts, intervention history, and team activity without digging through raw logs.",
+    metric: "90 day history",
   },
+];
+
+const workflow = [
+  { label: "Detect", body: "Vertex watches privileged activity and raid behavior in real time." },
+  { label: "Decide", body: "Every signal is evaluated against your configured server policy." },
+  { label: "Respond", body: "Unsafe actions are blocked, reversed, logged, and escalated to staff." },
 ];
 
 const plans = [
@@ -34,18 +49,18 @@ const plans = [
     name: "Free",
     price: "$0",
     period: "",
-    desc: "Core protection for any server.",
-    features: ["Antinuke (basic thresholds)", "Antiraid (join-rate detection)", "Mod commands + case logs", "5 trusted users", "Standard support"],
+    desc: "Core protection for smaller communities.",
+    features: ["Basic antinuke thresholds", "Join-rate antiraid checks", "Moderation commands", "Case logging", "5 trusted users"],
     cta: "Get started",
-    href: `https://discord.com/oauth2/authorize?client_id=1516645906009690272`,
+    href: inviteUrl,
     highlight: false,
   },
   {
     name: "Pro",
     price: "$4.99",
     period: "/mo",
-    desc: "Advanced controls for serious servers.",
-    features: ["Everything in Free", "Custom thresholds per action type", "Whitelist + role-based trust", "Analytics dashboard", "Auto-lockdown schedules", "Priority support"],
+    desc: "Advanced controls for active servers.",
+    features: ["Everything in Free", "Custom action thresholds", "Role-based trust controls", "Analytics dashboard", "Priority support"],
     cta: "Upgrade to Pro",
     href: "/dashboard",
     highlight: true,
@@ -55,187 +70,214 @@ const plans = [
     price: "Custom",
     period: "",
     desc: "For large communities and networks.",
-    features: ["Everything in Pro", "Multi-server management", "Custom event pipeline", "Dedicated support channel", "Early access to beta features", "SLA uptime guarantee"],
+    features: ["Everything in Pro", "Multi-server management", "Custom event rules", "Dedicated support channel", "SLA response planning"],
     cta: "Contact us",
-    href: "https://discord.gg/vte",
+    href: supportUrl,
     highlight: false,
   },
 ];
 
 export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <section className={styles.hero}>
-        <div className={styles.heroBg} aria-hidden="true">
-          <div className={styles.heroGlow} />
-          <div className={styles.heroGrid} />
+    <main className={styles.page}>
+      <nav className={styles.nav} aria-label="Primary navigation">
+        <a href="#home" className={styles.navBrand} aria-label="Vertex home">
+          <img src="/vertex-logo.png" alt="Vertex" className={styles.navLogo} />
+        </a>
+        <div className={styles.navLinks}>
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className={styles.navLink}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+              rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
-        <div className={styles.heroInner}>
-          <h1 className={styles.heroHeadline}>
-            Your server stays up.<br />
-            <span className={styles.heroAccent}>We make sure of it.</span>
-          </h1>
-          <p className={styles.heroSub}>
-            Vertex watches every privileged action across your server, blocks destructive operations before they complete, and gives your team a full audit trail — from a single dashboard.
+        <a href="/dashboard" className={styles.navAccount} aria-label="Open dashboard">
+          <span className={styles.navAvatar} />
+          <span className={styles.navChevron} />
+        </a>
+      </nav>
+
+      <section className={styles.hero} id="home">
+        <div className={`${styles.heroCopy} ${styles.reveal}`}>
+          <p className={styles.kicker}>Discord security infrastructure</p>
+          <h1 className={styles.heroTitle}>Your server stays online. Vertex keeps it that way.</h1>
+          <p className={styles.heroText}>
+            Antinuke, antiraid, moderation cases, analytics, and audit response in one clean dashboard for Discord communities that need control without noise.
           </p>
           <div className={styles.heroActions}>
-            <LoginButton />
-            <a
-              href={`https://discord.com/oauth2/authorize?client_id=1516645906009690272`}
-              className={styles.heroSecondary}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="/dashboard" className={styles.primaryButton}>
+              Get started
+            </a>
+            <a href={inviteUrl} className={styles.secondaryButton} target="_blank" rel="noopener noreferrer">
               Add to Server
             </a>
           </div>
         </div>
-        <div className={styles.heroLogoWrap} aria-hidden="true">
-          <Image src="/vertex-logo.png" alt="" width={420} height={420} className={styles.heroLogo} priority />
+
+        <div className={`${styles.heroVisual} ${styles.reveal} ${styles.delayOne}`} aria-hidden="true">
+          <div className={styles.browserFrame}>
+            <div className={styles.browserTop}>
+              <div className={styles.browserControls}>
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className={styles.browserAddress}>vtebot.xyz/dashboard</div>
+            </div>
+            <div className={styles.dashboardMock}>
+              <div className={styles.mockHeader}>
+                <div>
+                  <span className={styles.mockEyebrow}>Vertex Guard</span>
+                  <strong>Protection status</strong>
+                </div>
+                <span className={styles.livePill}>Live</span>
+              </div>
+              <div className={styles.signalGrid}>
+                <div className={styles.signalCard}>
+                  <span>Threats blocked</span>
+                  <strong>128</strong>
+                </div>
+                <div className={styles.signalCard}>
+                  <span>Avg. response</span>
+                  <strong>80ms</strong>
+                </div>
+              </div>
+              <div className={styles.eventPanel}>
+                <div className={styles.eventRow}>
+                  <span className={styles.eventStatus}>BLOCK</span>
+                  <span>ban_add exceeded threshold</span>
+                  <time>14:02</time>
+                </div>
+                <div className={styles.eventRow}>
+                  <span className={styles.eventStatus}>RESTORE</span>
+                  <span>permissions rolled back</span>
+                  <time>14:03</time>
+                </div>
+                <div className={styles.eventRow}>
+                  <span className={styles.eventStatus}>LOCK</span>
+                  <span>join velocity spike contained</span>
+                  <time>14:04</time>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className={styles.modules} id="features">
-        <div className={styles.sectionInner}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>Modules</span>
-            <h2 className={styles.sectionTitle}>Built for every threat vector</h2>
-            <p className={styles.sectionSub}>Four independent protection layers, each configurable independently.</p>
-          </div>
-          <div className={styles.moduleGrid}>
-            {modules.map((mod) => (
-              <div key={mod.tag} className={styles.moduleCard}>
-                <span className={styles.moduleTag}>{mod.tag}</span>
-                <h3 className={styles.moduleTitle}>{mod.title}</h3>
-                <p className={styles.moduleBody}>{mod.body}</p>
-                <div className={styles.moduleStats}>
-                  {mod.stats.map((s) => (
-                    <div key={s.label} className={styles.moduleStat}>
-                      <span className={styles.moduleStatValue}>{s.value}</span>
-                      <span className={styles.moduleStatLabel}>{s.label}</span>
-                    </div>
-                  ))}
-                </div>
+      <section className={styles.section} id="features">
+        <div className={`${styles.sectionHeader} ${styles.reveal}`}>
+          <p className={styles.kicker}>Platform</p>
+          <h2>Everything your team needs to protect the server.</h2>
+          <p>Vertex gives owners and moderators a focused security layer without turning the dashboard into a toy.</p>
+        </div>
+        <div className={styles.moduleGrid}>
+          {modules.map((module, index) => (
+            <article key={module.name} className={`${styles.moduleCard} ${styles.reveal} ${index % 2 === 0 ? styles.delayOne : styles.delayTwo}`}>
+              <span className={styles.moduleMetric}>{module.metric}</span>
+              <h3>{module.name}</h3>
+              <strong>{module.title}</strong>
+              <p>{module.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.splitSection}`}>
+        <div className={`${styles.splitCopy} ${styles.reveal}`}>
+          <p className={styles.kicker}>Response flow</p>
+          <h2>Built around signal, not clutter.</h2>
+          <p>
+            Vertex keeps the interface quiet until something matters. When it does, your team gets the context, timeline, action taken, and next step in one place.
+          </p>
+          <div className={styles.workflowList}>
+            {workflow.map((item) => (
+              <div key={item.label} className={styles.workflowItem}>
+                <span>{item.label}</span>
+                <p>{item.body}</p>
               </div>
             ))}
           </div>
         </div>
+        <div className={`${styles.auditPanel} ${styles.reveal} ${styles.delayOne}`} aria-label="Example audit timeline">
+          <div className={styles.auditHeader}>
+            <span>Threat timeline</span>
+            <strong>Raid contained</strong>
+          </div>
+          <div className={styles.auditLine}>
+            <span>14:02:11</span>
+            <p>New account cluster detected from repeated invite source.</p>
+          </div>
+          <div className={styles.auditLine}>
+            <span>14:02:18</span>
+            <p>Server verification tightened and suspicious arrivals quarantined.</p>
+          </div>
+          <div className={styles.auditLine}>
+            <span>14:02:22</span>
+            <p>Staff notified with member list, risk score, and recommended review.</p>
+          </div>
+        </div>
       </section>
 
-      <section className={styles.trust}>
-        <div className={styles.sectionInner}>
-          <div className={styles.trustGrid}>
-            <div className={styles.trustLeft}>
-              <span className={styles.sectionTag}>Zero-trust model</span>
-              <h2 className={styles.sectionTitle}>No one gets a free pass</h2>
-              <p className={styles.trustBody}>
-                Vertex operates on a zero-trust security model. Every action — even from administrators — is evaluated against your configured policy before it executes. Trusted users are explicitly whitelisted, not assumed.
-              </p>
-              <ul className={styles.trustList}>
-                <li>Actions checked against thresholds before completion</li>
-                <li>Explicit whitelist required for elevated access</li>
-                <li>Full audit trail of every intervention</li>
-                <li>Automatic rollback on flagged actions</li>
+      <section className={styles.section} id="pricing">
+        <div className={`${styles.sectionHeader} ${styles.reveal}`}>
+          <p className={styles.kicker}>Pricing</p>
+          <h2>Start simple. Scale when your server needs more.</h2>
+          <p>Every plan keeps the same clean Vertex interface. Upgrade only when your policy needs deeper control.</p>
+        </div>
+        <div className={styles.pricingGrid}>
+          {plans.map((plan, index) => (
+            <article key={plan.name} className={`${styles.pricingCard} ${plan.highlight ? styles.pricingHighlight : ""} ${styles.reveal} ${index === 1 ? styles.delayOne : styles.delayTwo}`}>
+              {plan.highlight && <span className={styles.pricingBadge}>Most popular</span>}
+              <h3>{plan.name}</h3>
+              <div className={styles.priceLine}>
+                <span>{plan.price}</span>
+                {plan.period && <small>{plan.period}</small>}
+              </div>
+              <p>{plan.desc}</p>
+              <ul>
+                {plan.features.map((feature) => (
+                  <li key={feature}>
+                    <span className={styles.featureMarker} />
+                    {feature}
+                  </li>
+                ))}
               </ul>
-            </div>
-            <div className={styles.trustRight}>
-              <div className={styles.trustTerminal}>
-                <div className={styles.terminalBar}>
-                  <span className={styles.terminalDot} />
-                  <span className={styles.terminalDot} />
-                  <span className={styles.terminalDot} />
-                  <span className={styles.terminalTitle}>vertex — threat log</span>
-                </div>
-                <div className={styles.terminalBody}>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:02:11]</span> <span className={styles.tGreen}>PASS</span> <span className={styles.tMuted}>role_update by trusted#0001</span></div>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:02:44]</span> <span className={styles.tYellow}>WARN</span> <span className={styles.tMuted}>ban_add spike detected (3/5)</span></div>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:02:45]</span> <span className={styles.tRed}>BLOCK</span> <span className={styles.tMuted}>ban_add exceeded threshold</span></div>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:02:45]</span> <span className={styles.tRed}>ACTION</span> <span className={styles.tMuted}>stripped: attacker#9182</span></div>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:02:46]</span> <span className={styles.tGreen}>RESTORE</span> <span className={styles.tMuted}>5 bans reversed</span></div>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:03:01]</span> <span className={styles.tGreen}>PASS</span> <span className={styles.tMuted}>channel_create by admin#0042</span></div>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:03:18]</span> <span className={styles.tYellow}>WARN</span> <span className={styles.tMuted}>join velocity high (28/min)</span></div>
-                  <div className={styles.terminalLine}><span className={styles.tDim}>[14:03:18]</span> <span className={styles.tRed}>LOCK</span> <span className={styles.tMuted}>server locked — raid pattern</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.pricing} id="pricing">
-        <div className={styles.sectionInner}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>Pricing</span>
-            <h2 className={styles.sectionTitle}>Protection that scales with you</h2>
-            <p className={styles.sectionSub}>Start free. Upgrade when your server needs more.</p>
-          </div>
-          <div className={styles.pricingGrid}>
-            {plans.map((plan) => (
-              <div key={plan.name} className={`${styles.pricingCard} ${plan.highlight ? styles.pricingHighlight : ""}`}>
-                {plan.highlight && <div className={styles.pricingBadge}>Most popular</div>}
-                <div className={styles.pricingName}>{plan.name}</div>
-                <div className={styles.pricingPrice}>
-                  <span className={styles.pricingAmount}>{plan.price}</span>
-                  {plan.period && <span className={styles.pricingPeriod}>{plan.period}</span>}
-                </div>
-                <p className={styles.pricingDesc}>{plan.desc}</p>
-                <ul className={styles.pricingFeatures}>
-                  {plan.features.map((f) => (
-                    <li key={f} className={styles.pricingFeature}>
-                      <span className={styles.pricingCheck}>&#10003;</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={plan.href}
-                  className={`${styles.pricingCta} ${plan.highlight ? styles.pricingCtaHighlight : ""}`}
-                  target={plan.href.startsWith("http") ? "_blank" : undefined}
-                  rel={plan.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                >
-                  {plan.cta}
-                </a>
-              </div>
-            ))}
-          </div>
+              <a
+                href={plan.href}
+                className={plan.highlight ? styles.primaryButton : styles.secondaryButton}
+                target={plan.href.startsWith("http") ? "_blank" : undefined}
+                rel={plan.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
+                {plan.cta}
+              </a>
+            </article>
+          ))}
         </div>
       </section>
 
       <footer className={styles.footer}>
-        <div className={styles.footerInner}>
-          <div className={styles.footerBrand}>
-            <Image src="/vertex-logo.png" alt="Vertex" width={32} height={32} className={styles.footerLogo} />
-            <div>
-              <div className={styles.footerName}>Vertex</div>
-            </div>
-          </div>
-          <div className={styles.footerCols}>
-            <div className={styles.footerCol}>
-              <div className={styles.footerColTitle}>General</div>
-              <a href="/" className={styles.footerLink}>Home</a>
-              <a href="#features" className={styles.footerLink}>Features</a>
-              <a href="#pricing" className={styles.footerLink}>Pricing</a>
-              <a href={`https://discord.com/oauth2/authorize?client_id=1516645906009690272`} target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Add to Server</a>
-            </div>
-            <div className={styles.footerCol}>
-              <div className={styles.footerColTitle}>Resources</div>
-              <a href="/docs" className={styles.footerLink}>Documentation</a>
-              <a href="/dashboard" className={styles.footerLink}>Dashboard</a>
-              <a href="https://discord.gg/vertex" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Support Server</a>
-              <a href="/changelog" className={styles.footerLink}>Changelog</a>
-            </div>
-            <div className={styles.footerCol}>
-              <div className={styles.footerColTitle}>Legal</div>
-              <a href="/privacy" className={styles.footerLink}>Privacy Policy</a>
-              <a href="/terms" className={styles.footerLink}>Terms of Service</a>
-            </div>
+        <div className={styles.footerBrand}>
+          <img src="/vertex-logo.png" alt="Vertex" />
+          <div>
+            <strong>Vertex</strong>
+            <span>Discord security infrastructure</span>
           </div>
         </div>
-        <div className={styles.footerBottom}>
-          <span className={styles.footerCopy}>&copy; {new Date().getFullYear()} Vertex. All rights reserved.</span>
-          <span className={styles.footerDomain}>vtebot.xyz</span>
+        <div className={styles.footerLinks}>
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="/dashboard">Dashboard</a>
+          <a href={supportUrl} target="_blank" rel="noopener noreferrer">
+            Support
+          </a>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

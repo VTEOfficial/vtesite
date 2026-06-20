@@ -1,21 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700;800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@500;600;700&display=swap");
 
 :root {
   --bg: #000000;
-  --surface: #0a0a0a;
-  --surface-2: #111111;
-  --border: #111111;
-  --border-2: #1e1e1e;
-  --text: #f0f0f0;
-  --text-muted: #5a5a6a;
-  --text-subtle: #2a2a2a;
+  --surface: #05070d;
+  --surface-2: #090c14;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-2: rgba(255, 255, 255, 0.12);
+  --text: #f4f6fb;
+  --text-muted: #747987;
+  --text-subtle: #4f5563;
   --accent: #1f4f97;
-  --accent-mid: #2a62b8;
-  --accent-light: #4a8fd4;
-  --accent-dim: rgba(31, 79, 151, 0.1);
-  --radius: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --accent-mid: #2f6bc0;
+  --accent-light: #77adf3;
+  --accent-dim: rgba(31, 79, 151, 0.14);
+  --font-display: "Instrument Sans", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  color-scheme: dark;
 }
 
 *,
@@ -27,18 +28,21 @@
 }
 
 html {
-  font-size: 16px;
+  min-height: 100%;
+  background: var(--bg);
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: "Inter", system-ui, sans-serif;
-  line-height: 1.6;
   min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 a {
@@ -46,58 +50,52 @@ a {
   text-decoration: none;
 }
 
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
 button {
   cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
+  border: 0;
+  background: transparent;
 }
 
-img {
-  max-width: 100%;
+img,
+svg,
+video,
+canvas {
   display: block;
+  max-width: 100%;
 }
 
-h1, h2, h3, h4 {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #000;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
-  border-radius: 3px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 800;
 }
 
 ::selection {
-  background: rgba(31, 79, 151, 0.25);
-  color: var(--text);
+  background: rgba(31, 79, 151, 0.42);
+  color: #ffffff;
 }
 
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+::-webkit-scrollbar {
+  width: 0.5rem;
 }
 
-[data-reveal].visible {
-  opacity: 1;
-  transform: translateY(0);
+::-webkit-scrollbar-track {
+  background: #000000;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+::-webkit-scrollbar-thumb {
+  border: 2px solid #000000;
+  border-radius: 999px;
+  background: #2b303b;
 }
