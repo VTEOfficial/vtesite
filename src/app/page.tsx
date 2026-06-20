@@ -11,7 +11,7 @@ const modules = [
   },
   {
     tag: "Antiraid",
-    title: "Coordinated join floods, neutralized",
+    title: "Coordinated jozn floods, neutralized",
     body: "Detects account-age patterns, join velocity, and profile signals simultaneously. Automatically locks the server or quarantines arrivals until the threat signature clears.",
     stats: [{ label: "Detection signals", value: "12" }, { label: "Auto-actions", value: "6" }],
   },
@@ -88,22 +88,6 @@ export default function HomePage() {
             >
               Add to Server
             </a>
-          </div>
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>34</span>
-              <span className={styles.heroStatLabel}>Event types monitored</span>
-            </div>
-            <div className={styles.heroStatDivider} />
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>&lt;80ms</span>
-              <span className={styles.heroStatLabel}>Avg. intervention time</span>
-            </div>
-            <div className={styles.heroStatDivider} />
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>99.9%</span>
-              <span className={styles.heroStatLabel}>Uptime</span>
-            </div>
           </div>
         </div>
         <div className={styles.heroLogoWrap} aria-hidden="true">
@@ -237,7 +221,7 @@ export default function HomePage() {
               <div className={styles.footerColTitle}>Resources</div>
               <a href="/docs" className={styles.footerLink}>Documentation</a>
               <a href="/dashboard" className={styles.footerLink}>Dashboard</a>
-              <a href="https://discord.gg/vte" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Support Server</a>
+              <a href="https://discord.gg/vertex" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Support Server</a>
               <a href="/changelog" className={styles.footerLink}>Changelog</a>
             </div>
             <div className={styles.footerCol}>
