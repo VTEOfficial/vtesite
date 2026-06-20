@@ -1,15 +1,13 @@
 import { initTRPC, TRPCError } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { getServerSession } from "next-auth";
+import { type NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
-  const session = await getServerSession(req, res, authOptions);
-  return { db, session };
+export const createTRPCContext = async (req: NextRequest) => {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  return { db, token };
 };
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
@@ -29,13 +27,11 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
+  if (!ctx.token) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
-    ctx: {
-      session: { ...ctx.session, user: ctx.session.user },
-    },
+    ctx: { token: ctx.token },
   });
 });
 
