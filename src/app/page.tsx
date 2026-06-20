@@ -71,7 +71,6 @@ export default function HomePage() {
           <div className={styles.heroGrid} />
         </div>
         <div className={styles.heroInner}>
-          <div className={styles.heroBadge}>Discord Security Infrastructure</div>
           <h1 className={styles.heroHeadline}>
             Your server stays up.<br />
             <span className={styles.heroAccent}>We make sure of it.</span>
@@ -224,7 +223,6 @@ export default function HomePage() {
             <Image src="/vertex-logo.png" alt="Vertex" width={32} height={32} className={styles.footerLogo} />
             <div>
               <div className={styles.footerName}>Vertex</div>
-              <div className={styles.footerTagline}>Discord security infrastructure</div>
             </div>
           </div>
           <div className={styles.footerCols}>
