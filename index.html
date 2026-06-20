@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vertex — Discord Security</title>
   <meta name="description" content="Antinuke, antiraid, and moderation infrastructure for Discord servers." />
-  <link rel="icon" href="public/vertex.png" />
+  <link rel="icon" href="/vertex.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -165,15 +165,6 @@
       position: relative;
       z-index: 1;
       max-width: 740px;
-    }
-
-    .hero-logo {
-      display: block;
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-      margin: 0 auto 44px;
-      opacity: 0.9;
     }
 
     .hero h1 {
@@ -593,7 +584,7 @@
   <nav id="nav">
     <div class="nav-wrap">
       <a class="nav-brand" href="/">
-        <img src="public/vertex.png" alt="Vertex" />
+        <img src="/vertex.png" alt="Vertex" data-logo />
         <span class="nav-brand-name">Vertex</span>
       </a>
       <div class="nav-center">
@@ -611,7 +602,6 @@
 
   <section class="hero">
     <div class="hero-content">
-      <img src="public/vertex.png" alt="Vertex" class="hero-logo" />
       <h1>Moderation infrastructure<br /><span class="dim">for servers that operate.</span></h1>
       <p class="hero-sub">Vertex runs antinuke, antiraid, and threat interception modules independently — built to hold when your server is under attack.</p>
       <div class="hero-actions">
@@ -748,7 +738,7 @@
   <footer>
     <div class="footer-wrap">
       <a class="footer-brand" href="/">
-        <img src="public/vertex.png" alt="Vertex" />
+        <img src="/vertex.png" alt="Vertex" data-logo />
         <span class="footer-brand-name">Vertex</span>
       </a>
       <ul class="footer-links">
@@ -763,6 +753,16 @@
 
   <script>
     const nav = document.getElementById('nav');
+    const logoSources = ['/vertex.png', 'public/vertex.png', './vertex.png'];
+    document.querySelectorAll('[data-logo]').forEach((logo) => {
+      let sourceIndex = 0;
+      logo.addEventListener('error', () => {
+        sourceIndex += 1;
+        if (sourceIndex < logoSources.length) {
+          logo.src = logoSources[sourceIndex];
+        }
+      });
+    });
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 8);
     }, { passive: true });
