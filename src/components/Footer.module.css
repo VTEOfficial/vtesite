@@ -1,0 +1,42 @@
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px;
+}
+
+.inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.link {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.link:hover {
+  color: var(--text);
+}
+
+.copy {
+  font-size: 0.8125rem;
+  color: var(--text-subtle);
+  margin-left: auto;
+}

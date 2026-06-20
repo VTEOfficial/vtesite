@@ -1,0 +1,22 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--accent);
+  color: #fff;
+  transition: background 0.15s, transform 0.1s;
+  font-family: "Inter", sans-serif;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
