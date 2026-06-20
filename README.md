@@ -1,10 +1,6 @@
-# VTE Bot Website
+# Vertex Official Website
 
-Official website for VTE Bot.
+Official Rep
 
-## Stack
-- HTML / CSS / JS
-- Hosted on Vercel
-
-## Live Site
-https://vtebot.xyz
+## Stacks
+- CSS / JS / TSX - TS
