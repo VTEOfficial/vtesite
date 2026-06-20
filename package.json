@@ -1,0 +1,12 @@
+{
+  "name": "vtesite",
+  "version": "1.0.0",
+  "description": "Official website for VTE Bot",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
