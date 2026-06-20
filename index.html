@@ -132,6 +132,16 @@
       background: rgba(255,255,255,0.04);
     }
 
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      background: var(--card);
+      display: none;
+    }
+
     .nav-btn {
       font-size: 13px;
       font-weight: 500;
@@ -594,7 +604,8 @@
         <a href="https://discord.gg/vte" target="_blank" rel="noopener noreferrer">Support</a>
       </div>
       <div class="nav-right">
-        <a href="#" class="nav-text-link">Login</a>
+        <a href="#" class="nav-text-link" id="login-link">Login</a>
+        <img src="" alt="" class="nav-avatar" id="user-avatar" />
         <a href="#" class="nav-btn">Add to Server</a>
       </div>
     </div>
@@ -753,7 +764,94 @@
 
   <script>
     const nav = document.getElementById('nav');
+    const loginLink = document.getElementById('login-link');
+    const userAvatar = document.getElementById('user-avatar');
+    const discordClientId = '1516645906009690272';
+    const discordSessionKey = 'vertex.discord.user';
+    const discordTokenKey = 'vertex.discord.token';
     const logoSources = ['/vertex.png', 'public/vertex.png', './vertex.png'];
+    const getRedirectUri = () => {
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.hash = '';
+      cleanUrl.search = '';
+      return cleanUrl.href;
+    };
+    const getAvatarUrl = (user) => {
+      if (!user || !user.id) {
+        return '';
+      }
+      if (user.avatar) {
+        return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`;
+      }
+      const discriminator = Number(user.discriminator || '0');
+      const index = user.discriminator === '0' ? Number((BigInt(user.id) >> 22n) % 6n) : discriminator % 5;
+      return `https://cdn.discordapp.com/embed/avatars/${index}.png`;
+    };
+    const setUser = (user) => {
+      const avatarUrl = getAvatarUrl(user);
+      if (!avatarUrl) {
+        return;
+      }
+      loginLink.style.display = 'none';
+      userAvatar.src = avatarUrl;
+      userAvatar.alt = user.global_name || user.username || 'Discord profile';
+      userAvatar.title = user.global_name || user.username || 'Discord profile';
+      userAvatar.style.display = 'block';
+    };
+    const clearUser = () => {
+      localStorage.removeItem(discordSessionKey);
+      localStorage.removeItem(discordTokenKey);
+      loginLink.style.display = '';
+      userAvatar.removeAttribute('src');
+      userAvatar.style.display = 'none';
+    };
+    const fetchDiscordUser = async (token) => {
+      const response = await fetch('https://discord.com/api/users/@me', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!response.ok) {
+        throw new Error('Discord authentication failed');
+      }
+      return response.json();
+    };
+    const handleDiscordCallback = async () => {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      const token = params.get('access_token');
+      if (!token) {
+        return false;
+      }
+      try {
+        const user = await fetchDiscordUser(token);
+        localStorage.setItem(discordTokenKey, token);
+        localStorage.setItem(discordSessionKey, JSON.stringify(user));
+        setUser(user);
+      } catch {
+        clearUser();
+      }
+      history.replaceState(null, document.title, getRedirectUri());
+      return true;
+    };
+    const restoreDiscordSession = async () => {
+      const savedUser = localStorage.getItem(discordSessionKey);
+      const savedToken = localStorage.getItem(discordTokenKey);
+      if (!savedUser || !savedToken) {
+        return;
+      }
+      try {
+        setUser(JSON.parse(savedUser));
+        const user = await fetchDiscordUser(savedToken);
+        localStorage.setItem(discordSessionKey, JSON.stringify(user));
+        setUser(user);
+      } catch {
+        clearUser();
+      }
+    };
+    const startDiscordLogin = (event) => {
+      event.preventDefault();
+      const redirectUri = encodeURIComponent(getRedirectUri());
+      const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${discordClientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
+      window.location.href = oauthUrl;
+    };
     document.querySelectorAll('[data-logo]').forEach((logo) => {
       let sourceIndex = 0;
       logo.addEventListener('error', () => {
@@ -762,6 +860,12 @@
           logo.src = logoSources[sourceIndex];
         }
       });
+    });
+    loginLink.addEventListener('click', startDiscordLogin);
+    handleDiscordCallback().then((handled) => {
+      if (!handled) {
+        restoreDiscordSession();
+      }
     });
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 8);
