@@ -12,6 +12,7 @@ const handler = (req: NextRequest) =>
       createTRPCContext({
         req: req as unknown as Parameters<typeof createTRPCContext>[0]["req"],
         res: undefined as unknown as Parameters<typeof createTRPCContext>[0]["res"],
+        info: undefined
       }),
     onError:
       process.env.NODE_ENV === "development"
