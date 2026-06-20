@@ -11,7 +11,7 @@ export function NavClient({ session }: { session: Session | null }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 16);
+    const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -19,48 +19,28 @@ export function NavClient({ session }: { session: Session | null }) {
   return (
     <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.inner}>
-        <Link href="/" className={styles.logo}>
-          Vertex
+        <Link href="/" className={styles.logoWrap}>
+          <Image src="/vertex-logo.png" alt="Vertex" width={26} height={26} className={styles.logoImg} />
+          <span className={styles.logoText}>Vertex</span>
         </Link>
         <nav className={styles.links}>
-          <Link href="/#features" className={styles.link}>
-            Features
-          </Link>
-          <a
-            href="https://discord.gg/vte"
-            className={styles.link}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Support
-          </a>
+          <Link href="#features" className={styles.link}>Features</Link>
+          <Link href="#pricing" className={styles.link}>Pricing</Link>
+          <a href="/docs" className={styles.link}>Docs</a>
+          <a href="https://discord.gg/vertex" className={styles.link} target="_blank" rel="noopener noreferrer">Support</a>
         </nav>
         <div className={styles.right}>
           {session ? (
             <>
-              <Link href="/dashboard" className={styles.dashBtn}>
-                Dashboard
-              </Link>
+              <Link href="/dashboard" className={styles.dashBtn}>Dashboard</Link>
               {session.user.image && (
-                <button
-                  className={styles.avatar}
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                  title="Sign out"
-                >
-                  <Image
-                    src={session.user.image}
-                    alt={session.user.name ?? "User"}
-                    width={32}
-                    height={32}
-                    className={styles.avatarImg}
-                  />
+                <button className={styles.avatar} onClick={() => signOut({ callbackUrl: "/" })} title="Sign out">
+                  <Image src={session.user.image} alt={session.user.name ?? "User"} width={30} height={30} className={styles.avatarImg} />
                 </button>
               )}
             </>
           ) : (
-            <Link href="/api/auth/signin" className={styles.loginBtn}>
-              Sign in
-            </Link>
+            <Link href="/api/auth/signin" className={styles.loginBtn}>Sign in</Link>
           )}
         </div>
       </div>

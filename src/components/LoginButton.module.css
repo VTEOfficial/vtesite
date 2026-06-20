@@ -4,17 +4,18 @@
   gap: 10px;
   height: 44px;
   padding: 0 22px;
-  border-radius: var(--radius);
+  border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 600;
-  background: var(--accent);
+  background: #1f4f97;
   color: #fff;
   transition: background 0.15s, transform 0.1s;
   font-family: "Inter", sans-serif;
+  letter-spacing: 0.01em;
 }
 
 .btn:hover {
-  background: var(--accent-hover);
+  background: #2a62b8;
 }
 
 .btn:active {
