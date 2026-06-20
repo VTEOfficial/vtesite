@@ -74,7 +74,6 @@ export default function HomePage() {
     <main className={styles.page}>
       <nav className={styles.nav} aria-label="Primary navigation">
         <a href="#home" className={styles.navBrand} aria-label="Vertex home">
-          <img src="/vertex-logo.png" alt="Vertex" className={styles.navLogo} />
         </a>
         <div className={styles.navLinks}>
         </div>
