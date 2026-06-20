@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { getAvatarUrl } from '@/lib/discord'
+import { getAvatarUrl } from '../discord'
 
 export async function GET() {
   const cookieStore = await cookies()

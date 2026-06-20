@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getOAuthURL } from '@/lib/discord'
+import { getOAuthURL } from '../discord'
 
 export async function GET() {
   return NextResponse.redirect(getOAuthURL())
