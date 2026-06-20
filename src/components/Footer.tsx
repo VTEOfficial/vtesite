@@ -8,7 +8,7 @@ export function Footer() {
         <span className={styles.brand}>Vertex</span>
         <div className={styles.links}>
           <a
-            href="https://discord.gg/vertex"
+            href="https://discord.gg/vte"
             className={styles.link}
             target="_blank"
             rel="noopener noreferrer"

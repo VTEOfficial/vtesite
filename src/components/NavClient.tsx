@@ -27,7 +27,7 @@ export function NavClient({ session }: { session: Session | null }) {
             Features
           </Link>
           <a
-            href="https://discord.gg/vertex"
+            href="https://discord.gg/vte"
             className={styles.link}
             target="_blank"
             rel="noopener noreferrer"
