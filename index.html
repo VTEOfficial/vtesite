@@ -776,6 +776,7 @@
       cleanUrl.search = '';
       return cleanUrl.href;
     };
+    const canUseDiscordOAuth = () => window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const getAvatarUrl = (user) => {
       if (!user || !user.id) {
         return '';
@@ -848,6 +849,10 @@
     };
     const startDiscordLogin = (event) => {
       event.preventDefault();
+      if (!canUseDiscordOAuth()) {
+        alert('Discord login must be tested from your deployed HTTPS domain after adding that exact URL to the Discord Developer Portal redirect URLs.');
+        return;
+      }
       const redirectUri = encodeURIComponent(getRedirectUri());
       const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${discordClientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
       window.location.href = oauthUrl;
