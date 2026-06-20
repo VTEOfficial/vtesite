@@ -3,14 +3,6 @@ import styles from "./page.module.css";
 const inviteUrl = "https://discord.com/oauth2/authorize?client_id=1516645906009690272";
 const supportUrl = "https://discord.gg/vertex";
 
-const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Add Bot", href: inviteUrl },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Docs", href: "/docs" },
-];
-
 const modules = [
   {
     name: "Antinuke",
@@ -85,17 +77,6 @@ export default function HomePage() {
           <img src="/vertex-logo.png" alt="Vertex" className={styles.navLogo} />
         </a>
         <div className={styles.navLinks}>
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={styles.navLink}
-              target={item.href.startsWith("http") ? "_blank" : undefined}
-              rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
         </div>
         <a href="/dashboard" className={styles.navAccount} aria-label="Open dashboard">
           <span className={styles.navAvatar} />
@@ -105,7 +86,6 @@ export default function HomePage() {
 
       <section className={styles.hero} id="home">
         <div className={`${styles.heroCopy} ${styles.reveal}`}>
-          <p className={styles.kicker}>Discord security infrastructure</p>
           <h1 className={styles.heroTitle}>Your server stays online. Vertex keeps it that way.</h1>
           <p className={styles.heroText}>
             Antinuke, antiraid, moderation cases, analytics, and audit response in one clean dashboard for Discord communities that need control without noise.
@@ -266,7 +246,6 @@ export default function HomePage() {
           <img src="/vertex-logo.png" alt="Vertex" />
           <div>
             <strong>Vertex</strong>
-            <span>Discord security infrastructure</span>
           </div>
         </div>
         <div className={styles.footerLinks}>
