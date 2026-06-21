@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Nav } from "@/components/Nav";
 import { Providers } from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/next";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Nav />
           <main>{children}</main>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
