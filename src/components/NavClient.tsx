@@ -1,7 +1,7 @@
 "use client";
 
 import { type Session } from "next-auth";
-import { signOut } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -40,7 +40,7 @@ export function NavClient({ session }: { session: Session | null }) {
               )}
             </>
           ) : (
-            <Link href="/api/auth/signin" className={styles.loginBtn}>Sign in</Link>
+            <button className={styles.loginBtn} onClick={() => signIn("discord", { callbackUrl: "/dashboard" })}>Sign in</button>
           )}
         </div>
       </div>
